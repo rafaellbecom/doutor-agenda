@@ -9,10 +9,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -59,6 +58,7 @@ const items = [
 export function AppSidebar() {
   const router = useRouter();
   const session = authClient.useSession();
+  const pathName = usePathname();
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -82,7 +82,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={pathName === item.url}>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
